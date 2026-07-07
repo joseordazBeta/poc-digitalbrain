@@ -1,0 +1,13 @@
+node_modules
+.next
+.next-build
+.next-poc
+.next-safe
+.npm-cache
+.tmp-pack
+.tmp
+tmp
+.env.local
+.DS_Store
+public/llms.txt
+public/.well-known/
