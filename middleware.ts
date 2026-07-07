@@ -1,5 +1,17 @@
 import { NextRequest, NextResponse } from 'next/server';
 
+const AI_LINK_HEADERS = [
+  '</.well-known/mcp/server-card.json>; rel="mcp-server-card"; type="application/json"',
+  '</llms.txt>; rel="alternate"; type="text/markdown"',
+];
+
+function addAiLinkHeaders(response: NextResponse) {
+  for (const value of AI_LINK_HEADERS) {
+    response.headers.append('Link', value);
+  }
+  return response;
+}
+
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
@@ -15,7 +27,7 @@ export function middleware(request: NextRequest) {
     return NextResponse.rewrite(new URL('/api/mcp', request.url));
   }
 
-  return NextResponse.next();
+  return addAiLinkHeaders(NextResponse.next());
 }
 
 export const config = {

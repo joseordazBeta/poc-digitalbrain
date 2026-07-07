@@ -1,10 +1,12 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import AiHead from '../src/components/AiHead';
 import { projectName } from '../src/lib/site';
 
 export default function AboutPage() {
   return (
     <>
+      <AiHead />
       <Head>
         <title>About | {projectName}</title>
       </Head>

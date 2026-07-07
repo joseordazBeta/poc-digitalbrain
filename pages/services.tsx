@@ -1,10 +1,12 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import AiHead from '../src/components/AiHead';
 import { projectName } from '../src/lib/site';
 
 export default function ServicesPage() {
   return (
     <>
+      <AiHead />
       <Head>
         <title>Services | {projectName}</title>
       </Head>

@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Link from 'next/link';
+import AiHead from '../src/components/AiHead';
 import { projectName } from '../src/lib/site';
 
 const sectionCard = {
@@ -13,6 +14,7 @@ const sectionCard = {
 export default function HomePage() {
   return (
     <>
+      <AiHead />
       <Head>
         <title>{projectName}</title>
         <meta

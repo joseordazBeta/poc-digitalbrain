@@ -1,9 +1,11 @@
 import Head from 'next/head';
+import AiHead from '../src/components/AiHead';
 import { mcpEndpointPath, projectName } from '../src/lib/site';
 
 export default function AiPage() {
   return (
     <>
+      <AiHead />
       <Head>
         <title>AI instructions | {projectName}</title>
         <meta
