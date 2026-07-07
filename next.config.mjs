@@ -1,6 +1,5 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  distDir: '/tmp/poc-digitalbrain-next',
   reactStrictMode: true,
   eslint: {
     ignoreDuringBuilds: true,
