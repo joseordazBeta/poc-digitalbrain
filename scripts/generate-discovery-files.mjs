@@ -48,6 +48,22 @@ const discovery = {
         required: ['query'],
       },
     },
+    {
+      name: 'get_company_profile',
+      title: 'Get company profile',
+      description:
+        'Return the canonical structured profile for the company, including agent-only notes not present in the HTML.',
+      inputSchema: {
+        type: 'object',
+        properties: {
+          includeNotes: {
+            type: 'boolean',
+            description: 'Include MCP-only notes for agent use',
+            default: true,
+          },
+        },
+      },
+    },
   ],
 };
 

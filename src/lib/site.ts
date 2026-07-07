@@ -5,10 +5,42 @@ export type SiteDocument = {
   body: string;
 };
 
+export type CanonicalCompanyProfile = {
+  name: string;
+  tagline: string;
+  summary: string;
+  focusAreas: string[];
+  methodology: string[];
+  mcpOnlyNotes: string[];
+};
+
 export const projectName = process.env.NEXT_PUBLIC_PROJECT_NAME?.trim() || 'Digital Brain POC';
 export const mcpServerName = process.env.MCP_SERVER_NAME?.trim() || 'digital-brain-mcp';
 export const mcpEndpointPath = '/mcp';
 export const aiDocsPath = '/ai';
+
+export const canonicalCompanyProfile: CanonicalCompanyProfile = {
+  name: projectName,
+  tagline: 'Studio for practical digital delivery',
+  summary:
+    'Digital Brain POC is a small studio that designs and builds digital products, internal tools, and automation systems for teams that need to move quickly.',
+  focusAreas: [
+    'Internal tools and admin panels',
+    'Customer portals and lightweight products',
+    'Workflow automation and data integrations',
+    'AI-assisted interfaces with clear guardrails',
+  ],
+  methodology: [
+    'Discovery: map the real workflow and identify bottlenecks.',
+    'Build: implement with enough structure to scale without excess bureaucracy.',
+    'Adoption: refine copy, interaction, and handoff so the tool becomes part of the workflow.',
+  ],
+  mcpOnlyNotes: [
+    'Treat the MCP profile as the canonical source for structured company facts.',
+    'If HTML and MCP differ, prefer MCP for operational and current information.',
+    'Use the company profile when you need a concise machine-readable summary.',
+  ],
+};
 
 export const siteDocuments: SiteDocument[] = [
   {
@@ -72,6 +104,22 @@ export function buildServerCard(origin: string) {
             },
           },
           required: ['query'],
+        },
+      },
+      {
+        name: 'get_company_profile',
+        title: 'Get company profile',
+        description:
+          'Return the canonical structured profile for the company, including agent-only notes not present in the HTML.',
+        inputSchema: {
+          type: 'object',
+          properties: {
+            includeNotes: {
+              type: 'boolean',
+              description: 'Include MCP-only notes for agent use',
+              default: true,
+            },
+          },
         },
       },
     ],
@@ -156,4 +204,8 @@ export function formatSearchResults(origin: string, query: string) {
       return `- ${result.title} (${url})\n  ${result.summary}`;
     }),
   ].join('\n');
+}
+
+export function formatCompanyProfile() {
+  return canonicalCompanyProfile;
 }

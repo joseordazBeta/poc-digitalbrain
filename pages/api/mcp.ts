@@ -2,7 +2,12 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import * as z from 'zod/v4';
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { StreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/streamableHttp.js';
-import { formatSearchResults, mcpServerName, projectName } from '../../src/lib/site';
+import {
+  formatCompanyProfile,
+  formatSearchResults,
+  mcpServerName,
+  projectName,
+} from '../../src/lib/site';
 import { getRequestOrigin } from '../../src/lib/request';
 
 export const config = {
@@ -43,6 +48,39 @@ function createServer(origin: string) {
         },
       ],
     }),
+  );
+
+  server.registerTool(
+    'get_company_profile',
+    {
+      title: 'Get company profile',
+      description:
+        'Return the canonical structured profile for the company, including agent-only notes not present in the HTML.',
+      inputSchema: {
+        includeNotes: z.boolean().default(true).describe('Include MCP-only notes for agent use'),
+      },
+    },
+    async ({ includeNotes }) => {
+      const profile = formatCompanyProfile();
+      const payload = includeNotes
+        ? profile
+        : {
+            name: profile.name,
+            tagline: profile.tagline,
+            summary: profile.summary,
+            focusAreas: profile.focusAreas,
+            methodology: profile.methodology,
+          };
+
+      return {
+        content: [
+          {
+            type: 'text',
+            text: JSON.stringify(payload, null, 2),
+          },
+        ],
+      };
+    },
   );
 
   return server;
