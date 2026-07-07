@@ -34,4 +34,10 @@ If you want to change the labels, set:
 
 - `NEXT_PUBLIC_PROJECT_NAME`
 - `MCP_SERVER_NAME`
+- `NEXT_PUBLIC_SITE_URL`
 
+For Vercel, set `NEXT_PUBLIC_SITE_URL` to:
+
+```text
+https://poc-digitalbrain.vercel.app
+```
